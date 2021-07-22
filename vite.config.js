@@ -40,6 +40,7 @@ export default defineConfig({
   //   }
   // },
   server: {
+    port: 3100,
     proxy: {
       '/api': {
         target: 'http://cjj.x',

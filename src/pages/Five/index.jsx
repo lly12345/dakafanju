@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { post } from 'utils/request'
 import { getTime } from 'utils/time'
 
-import { DatePicker } from 'zarm';
+import { Cell, DateSelect, DatePickerView, DatePicker } from 'zarm';
 import './index.less'
 
 import top from '@/assets/top.png'
@@ -30,19 +30,30 @@ export default function Five(props) {
 
     const [form, setForm] = useState(initialState)
     const [visible, setVisible] = useState(false)
+    const [value, setValue] = useState('');
 
+    useEffect(()=>{
+        setForm({ ...form, time: props.time })
+    },[props.time])
     //    提交报名信息
     const handleSubmit = () => {
+        // console.log(form);
+        
+       
         if (!(/^((0\d{2,3}-\d{7,8})|(1[3456789]\d{9}))$/.test(form.phone))) return alert("请填写正确的电话号码")
         post('/dakafanju/register', form).then(res => {
             if (!res.success) return alert(res.msg)
             confirm('提交成功')
+            props.setCurrentIndex(6)
         })
     }
 
     const handleChange = (e, flag) => {
         setForm({ ...form, [flag]: e.target.value })
     }
+    
+
+
 
     return (
         <div className={`${show ? "page-box__five" : 'show'}`}>
@@ -55,13 +66,45 @@ export default function Five(props) {
                     <div className={`right animated ${show ? "slideInRight slow" : ''}`}>
                         <input type="text" value={form.name} onChange={(e) => handleChange(e, 'name')} placeholder="客户姓名" />
                         <input type="text" value={form.phone} onChange={(e) => handleChange(e, 'phone')} placeholder="客户电话" />
+                        <input type="text" value={form.title} onChange={(e) => handleChange(e, 'title')} placeholder="所属公司名称-职务" />
                         {/* <input type="text" onClick={() =>setVisible(true)} value={form.time} onChange={(e) => handleChange(e, 'time')} placeholder="用餐时间" /> */}
-                        <input type="date" value={form.time} onChange={(e) => handleChange(e, 'time')} placeholder="用餐时间" />
+
 
                     </div>
                 </div>
                 <div className={`bottom animated ${show ? "slideInRight slow" : ''}`}>
-                    <input type="text" value={form.title} onChange={(e) => handleChange(e, 'title')} placeholder="公司名称-职务" />
+                    {/* <div className="time">
+                        <span>用餐时间</span>
+                        <input type="date" value={form.time} onChange={(e) => handleChange(e, 'time')} placeholder="用餐时间" />
+                    </div> */}
+                    <Cell title="用餐时间" id="open-btn" onClick={() => props.setVisible(true)}>
+                        <div>{form.time}</div>
+                        {/* <DateSelect
+                            visible={visible}
+                            className="test-dateSelect"
+                            title="用餐时间"
+                            placeholder="请选择日期"
+                            mode="date"
+                            value={form.time}
+                            onOk={(value) => {
+                                console.log('DateSelect onOk: ', value);
+                                handleChange(getTime("yyyy-MM-dd",value), 'time')
+                                console.log(visible);
+                            }}
+                        /> */}
+                        {/* <DatePicker
+                            visible={visible}
+                            mode="date"
+                            value={form.time}
+                            onOk={(value) => {
+                                console.log(value);
+                                setValue('date', value);
+
+                            }}
+                            onCancel={() => toggle('date')}
+                        /> */}
+                    </Cell>
+
                     <input type="text" value={form.salesman} onChange={(e) => handleChange(e, 'salesman')} placeholder="毛铺业务负责人" />
                 </div>
             </div>
@@ -74,20 +117,6 @@ export default function Five(props) {
             <div className="footer">
                 <img className={`animated ${show ? "slideInRight slow" : ''}`} src={footRight} alt="" />
             </div>
-            {/* 选择日期 */}
-            {/* <DatePicker
-                className="picker"
-                visible={visible}
-                mode="date"
-                onOk={(value) => {
-                    console.log(value);
-                    setForm({ ...form, time: getTime('yyyy-MM-dd',value) })
-                    setVisible(false)
-                }}
-                onCancel={() => setVisible(false)}
-            /> */}
-
-
         </div>
     )
 }

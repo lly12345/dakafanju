@@ -13,6 +13,7 @@ body{
   padding: 0;
   -webkit-text-size-adjust: 100% !important;
 }
+
 p,h2,h6{
   margin: 0;
   padding: 0;
@@ -20,6 +21,10 @@ p,h2,h6{
  
 .am-wingblank.am-wingblank-lg {
   margin:0;
+}
+.za-date-picker{
+  touch-action: none;
+  overscroll-behavior: contain;
 }
 
 

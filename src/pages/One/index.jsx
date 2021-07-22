@@ -20,7 +20,7 @@ export default function One(props) {
                 <img src={top} alt="" />
             </div>
             <div className="main">
-                <img className="tip" src={tip} alt="" />
+                {/* <img className="tip" src={tip} alt="" /> */}
                 <img  className={`${show ? "title" : ''}`} src={title} alt="" />
             </div>
             <div className="hot">

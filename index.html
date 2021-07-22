@@ -10,14 +10,12 @@
   <script src="https://res2.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
   <script src="/URLquery.js"></script>
   <script>
-    console.log('哈希');
-    console.log(getQuery('sid'));
+    console.log('1.1.2');
     if (getQuery('sid')) window.localStorage.setItem('sid', getQuery('sid'))
     if (getQuery('token')) window.localStorage.setItem('token', getQuery('token'))
     if (getQuery('token') || window.localStorage.getItem('token')) {
       console.log('token');
     } else {
-      console.log('跳转腾讯');
        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx569951161804e340&redirect_uri=https%3A%2F%2Fh5.fuzhouxiaoyu.com%2Fuser%2Fwx-login-code&response_type=code&scope=snsapi_userinfo&state=from:ydcj-dakafanju#wechat_redirect"
     }
   </script>
